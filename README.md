@@ -8,6 +8,6 @@ A DAW designed for music composition.
 ```
 mkdir build
 cmake -S src/ -B build/
-cd build/
-./resonance
+cmake --build src/
+./src/resonance
 ```
