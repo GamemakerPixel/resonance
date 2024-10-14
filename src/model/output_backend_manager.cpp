@@ -1,19 +1,15 @@
 #include "output_backend_manager.h"
 
 #include <stdexcept>
+#include <array>
 #include <string>
 #include <unordered_map>
 #include <vector>
 
 #include <soundio/soundio.h>
 
-//OutputBackend();
-//~OutputBackend();
-//std::vector<OutputBackend> get_avaliable_backends();
 //void connect_to_first_avaliable_backend();
-//void connect_to_backend(OutputBackend backend);
 //OutputBackend get_connected_backend();
-//std::string get_backend_name(OutputBackend backend);
 
 const std::unordered_map<SoundIoBackend, OutputBackend> OutputBackendManager::soundio_backend_conversion_map =
 {
@@ -46,6 +42,15 @@ const std::unordered_map<OutputBackend, std::string> OutputBackendManager::backe
   {OutputBackend::CORE_AUDIO, "CoreAudio"},
   {OutputBackend::WASAPI, "Wasapi"},
   {OutputBackend::DUMMY, "Dummy"},
+};
+
+const std::array<OutputBackend, 6> OutputBackendManager::backend_default_order =
+{
+  OutputBackend::ALSA,
+  OutputBackend::JACK,
+  OutputBackend::PULSE_AUDIO,
+  OutputBackend::CORE_AUDIO,
+  OutputBackend::WASAPI,
 };
 
 
@@ -92,8 +97,16 @@ void OutputBackendManager::connect_to_backend(OutputBackend backend)
 }
 
 
+void OutputBackendManager::connect_to_first_avaliable_backend()
+{
+  for (int index = 0; index < backend_default_order.size(); index++)
+  {
+    
+  }
+}
+
+
 std::string OutputBackendManager::get_backend_name(OutputBackend backend) const
 {
   return backend_names.at(backend);
 }
-

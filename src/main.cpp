@@ -30,4 +30,3 @@ int main()
   backend_manager.connect_to_backend(backend);
   std::cout << "Connected to " << backend_manager.get_backend_name(backend) << std::endl;
 }
-

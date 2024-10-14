@@ -24,7 +24,7 @@ class OutputBackendManager
     OutputBackendManager();
     ~OutputBackendManager();
     std::vector<OutputBackend> get_avaliable_backends() const;
-//    void connect_to_first_avaliable_backend();
+    void connect_to_first_avaliable_backend();
     void connect_to_backend(OutputBackend backend);
 //    OutputBackend get_connected_backend() const;
     std::string get_backend_name(OutputBackend backend) const;
@@ -32,6 +32,8 @@ class OutputBackendManager
     static const std::unordered_map<SoundIoBackend, OutputBackend> soundio_backend_conversion_map;
     static const std::unordered_map<OutputBackend, SoundIoBackend> reversed_backend_conversion_map;
     static const std::unordered_map<OutputBackend, std::string> backend_names;
+    static const std::array<OutputBackend, 6> backend_default_order;
+
     SoundIo* backend_context;
     OutputBackend connected_backend;
 };
