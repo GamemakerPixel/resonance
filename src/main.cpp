@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 
-#include "model/output_backend_manager.h"
+#include "core/output_backend_manager.h"
 
 
 void discover_availiable_backends(const OutputBackendManager& backend_manager)
