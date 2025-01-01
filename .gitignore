@@ -47,3 +47,7 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 CMakeUserPresets.json
+
+# Generated Documentation
+docs/html/
+docs/latex/
