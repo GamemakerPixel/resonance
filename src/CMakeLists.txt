@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.30)
 project(resonance LANGUAGES CXX)
 
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
+
 add_subdirectory(core)
 add_subdirectory(views)
 add_subdirectory(test)

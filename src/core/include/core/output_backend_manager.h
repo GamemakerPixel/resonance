@@ -2,6 +2,7 @@
 
 #include <string>
 #include <unordered_map>
+#include <unordered_set>
 #include <vector>
 
 #include <soundio/soundio.h>
@@ -23,14 +24,12 @@ class OutputBackendManager
   public:
     OutputBackendManager();
     ~OutputBackendManager();
-    std::vector<OutputBackend> get_avaliable_backends() const;
+    std::unordered_set<OutputBackend> get_avaliable_backends() const;
     void connect_to_first_avaliable_backend();
     void connect_to_backend(OutputBackend backend);
-//    OutputBackend get_connected_backend() const;
+    OutputBackend get_connected_backend() const;
     std::string get_backend_name(OutputBackend backend) const;
   private:
-    static const std::unordered_map<SoundIoBackend, OutputBackend> soundio_backend_conversion_map;
-    static const std::unordered_map<OutputBackend, SoundIoBackend> reversed_backend_conversion_map;
     static const std::unordered_map<OutputBackend, std::string> backend_names;
     static const std::array<OutputBackend, 6> backend_default_order;
 

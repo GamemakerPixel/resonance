@@ -4,34 +4,10 @@
 #include <array>
 #include <string>
 #include <unordered_map>
-#include <vector>
+#include <unordered_set>
 
 #include <soundio/soundio.h>
 
-//void connect_to_first_avaliable_backend();
-//OutputBackend get_connected_backend();
-
-const std::unordered_map<SoundIoBackend, OutputBackend> OutputBackendManager::soundio_backend_conversion_map =
-{
-  {SoundIoBackendNone, OutputBackend::NONE},
-  {SoundIoBackendJack, OutputBackend::JACK},
-  {SoundIoBackendPulseAudio, OutputBackend::PULSE_AUDIO},
-  {SoundIoBackendAlsa, OutputBackend::ALSA},
-  {SoundIoBackendCoreAudio, OutputBackend::CORE_AUDIO},
-  {SoundIoBackendWasapi, OutputBackend::WASAPI},
-  {SoundIoBackendDummy, OutputBackend::DUMMY},
-};
-
-const std::unordered_map<OutputBackend, SoundIoBackend> OutputBackendManager::reversed_backend_conversion_map =
-{
-  {OutputBackend::NONE, SoundIoBackendNone},
-  {OutputBackend::JACK, SoundIoBackendJack},
-  {OutputBackend::PULSE_AUDIO, SoundIoBackendPulseAudio},
-  {OutputBackend::ALSA, SoundIoBackendAlsa},
-  {OutputBackend::CORE_AUDIO, SoundIoBackendCoreAudio},
-  {OutputBackend::WASAPI, SoundIoBackendWasapi},
-  {OutputBackend::DUMMY, SoundIoBackendDummy},
-};
 
 const std::unordered_map<OutputBackend, std::string> OutputBackendManager::backend_names =
 {
@@ -67,15 +43,15 @@ OutputBackendManager::~OutputBackendManager()
 }
 
 
-std::vector<OutputBackend> OutputBackendManager::get_avaliable_backends() const
+std::unordered_set<std::string> OutputBackendManager::get_avaliable_backends() const
 {
-  int avaliable_backends_count = soundio_backend_count(backend_context);
+  const int avaliable_backends_count = soundio_backend_count(backend_context);
 
-  std::vector<OutputBackend> avaliable_backends;
+  std::unordered_set<OutputBackend> avaliable_backends;
   for (int backend_index = 0; backend_index < avaliable_backends_count; backend_index++)
   {
-    SoundIoBackend soundio_backend = soundio_get_backend(backend_context, backend_index);
-    avaliable_backends.push_back(soundio_backend_conversion_map.at(soundio_backend));
+    const SoundIoBackend soundio_backend = soundio_get_backend(backend_context, backend_index);
+    avaliable_backends.insert(static_cast<OutputBackend>(soundio_backend));
   }
 
   return avaliable_backends;
@@ -84,9 +60,9 @@ std::vector<OutputBackend> OutputBackendManager::get_avaliable_backends() const
 
 void OutputBackendManager::connect_to_backend(OutputBackend backend)
 {
-  SoundIoBackend soundio_backend = reversed_backend_conversion_map.at(backend);
+  const SoundIoBackend soundio_backend = static_cast<SoundIoBackend>(backend);
 
-  int error = soundio_connect_backend(backend_context, soundio_backend);
+  const int error = soundio_connect_backend(backend_context, soundio_backend);
 
   if (error != SoundIoErrorNone)
   {
@@ -99,10 +75,21 @@ void OutputBackendManager::connect_to_backend(OutputBackend backend)
 
 void OutputBackendManager::connect_to_first_avaliable_backend()
 {
-  for (int index = 0; index < backend_default_order.size(); index++)
+  const std::unordered_set<OutputBackend> avaliable_backends = get_avaliable_backends();
+  for (OutputBackend backend: backend_default_order)
   {
-    
+    if (avaliable_backends.contains(backend))
+    {
+      connect_to_backend(backend);
+      return;
+    }
   }
+}
+
+
+OutputBackend OutputBackendManager::get_connected_backend() const
+{
+  return connected_backend;
 }
 
 

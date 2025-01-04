@@ -1,32 +1,35 @@
 #include <iostream>
-#include <vector>
+#include <unordered_set>
+#include <string>
 
-#include "core/output_backend_manager.h"
+#include "core/soundio_audio_backend.h"
 
 
-void discover_availiable_backends(const OutputBackendManager& backend_manager)
+void discover_availiable_backends(const SoundioAudioBackend& backend)
 {
-  std::vector<OutputBackend> avaliable_backends = backend_manager.get_avaliable_backends(); 
+  std::unordered_set<std::string> avaliable_backends = backend.get_avaliable_backends(); 
 
-  std::cout << "Avaliable backends: " << std::endl;
-  for (auto backend : avaliable_backends)
+  std::cout << "Avaliable backends: \n";
+  for (const std::string& avaliable_backend: avaliable_backends)
   {
-    std::cout << "\t" << backend_manager.get_backend_name(backend) << "\n";
+    std::cout << "\t" << avaliable_backend << "\n";
   }
 }
 
 
 int main()
 {
-  std::cout << "Welcome to Resonance!" << std::endl;
+  std::cout << "Welcome to Resonance!\n";
 
-  OutputBackendManager backend_manager;
+  SoundioAudioBackend backend;
   
-  discover_availiable_backends(backend_manager);
+  discover_availiable_backends(backend);
+/*
+  std::cout << "Connecting to best avaliable backend.\n";
 
-  OutputBackend backend = OutputBackend::ALSA;
-  std::cout << "Connecting to " << backend_manager.get_backend_name(backend) << std::endl;
+  backend_manager.connect_to_first_avaliable_backend();
 
-  backend_manager.connect_to_backend(backend);
+  const OutputBackend backend = backend_manager.get_connected_backend();
   std::cout << "Connected to " << backend_manager.get_backend_name(backend) << std::endl;
+*/
 }

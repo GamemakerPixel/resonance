@@ -1,3 +1,5 @@
+set(BUILD_TESTING FALSE) # Remove when at least one test exists.
+
 if (BUILD_TESTING)
   add_executable(${PROJECT_NAME}_tests)
   target_link_libraries(${PROJECT_NAME}_tests PRIVATE GTest::gtest_main)
