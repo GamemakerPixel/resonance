@@ -22,10 +22,8 @@ public:
   SoundioAudioBackend();
 
   std::unordered_set<std::string> get_avaliable_backends() const override;
-  /*
   void connect_to_backend(const std::string& backend_name) override;
   std::string get_connected_backend_name() const override;
-  */
 
 private:
   static std::unordered_map<std::string, SoundIoBackend>

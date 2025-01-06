@@ -35,18 +35,17 @@ std::unordered_set<std::string> SoundioAudioBackend::get_avaliable_backends() co
   return backends;
 }
 
-/*
 void SoundioAudioBackend::connect_to_backend(const std::string& backend_name)
 {
-
+  // Needs implementation
 }
 
 
 std::string SoundioAudioBackend::get_connected_backend_name() const
 {
-
+  //Needs implementation
+  return "Implement me!";
 }
-*/
 
 std::unordered_map<std::string, SoundIoBackend>
 SoundioAudioBackend::query_avaliable_backends(SoundIo* context)
