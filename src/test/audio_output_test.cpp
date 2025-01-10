@@ -4,26 +4,58 @@
 #include "mockups/mock_audio_backend.h"
 
 
-TEST(AudioOutputTest, ConnectsToFirstBackend)
+class AudioOutputTest : public testing::Test
 {
-  std::unordered_set<std::string> avaliable_backends = 
-  {
-    "First Backend",
-    "Second Backend",
-  };
+protected:
+  static const std::unordered_set<std::string> AVALIABLE_BACKENDS;
+  static const std::vector<std::string> CONNECTION_ORDER;
 
-  std::vector<std::string> connection_order = 
-  {
-    "First Backend",
-    "Second Backend",
-  };
+  MockAudioBackend m_backend;
+  AudioOutput m_audio_output;
 
-  MockAudioBackend backend(avaliable_backends);
-  AudioOutput audio_output(backend, connection_order);
+  AudioOutputTest() :
+    m_backend(AVALIABLE_BACKENDS),
+    m_audio_output(m_backend, CONNECTION_ORDER) {}
+};
 
-  audio_output.connect_backend();
 
-  EXPECT_EQ(audio_output.get_connected_backend(), "First Backend");
+const std::unordered_set<std::string> AudioOutputTest::AVALIABLE_BACKENDS =
+{
+  "First Backend",
+  "Second Backend",
+};
+const std::vector<std::string> AudioOutputTest::CONNECTION_ORDER =
+{
+  "First Backend",
+  "Second Backend",
+};
+
+
+TEST_F(AudioOutputTest, ConnectsToFirstBackend)
+{
+  m_audio_output.connect_backend();
+
+  EXPECT_EQ(m_audio_output.get_connected_backend(), "First Backend");
 }
 
 
+TEST_F(AudioOutputTest, ConnectsToFirstAvaliableBackend)
+{
+  m_backend.set_backend_status("First Backend", BackendStatus::UNAVALIABLE);
+
+  m_audio_output.connect_backend();
+
+  EXPECT_EQ(m_audio_output.get_connected_backend(), "Second Backend");
+}
+
+
+TEST_F(AudioOutputTest, ThrowsNoAudioOutputExceptionWhenAllBackendsUnavaliable)
+{
+  m_backend.set_backend_status("First Backend", BackendStatus::UNAVALIABLE);
+  m_backend.set_backend_status("Second Backend", BackendStatus::UNAVALIABLE);
+
+  EXPECT_THROW(
+    m_audio_output.connect_backend(),
+    AudioOutputExceptions::no_requested_backends
+  );
+}

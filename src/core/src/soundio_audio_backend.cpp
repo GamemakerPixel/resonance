@@ -30,7 +30,7 @@ std::unordered_set<std::string> SoundioAudioBackend::get_avaliable_backends() co
   for (auto backend: m_avaliable_backends)
   {
     backends.insert(backend.first);
-  }
+  } // Use copy constructor maybe?
 
   return backends;
 }
