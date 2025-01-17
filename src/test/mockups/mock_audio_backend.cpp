@@ -21,6 +21,14 @@ void MockAudioBackend::connect_to_backend(const std::string& backend_name)
     throw BackendExceptions::unavaliable_backend(backend_name);
   }
 
+  if (m_backend_statuses.contains(backend_name)
+    && m_backend_statuses.at(backend_name) == BackendStatus::ERROR)
+  {
+    throw BackendExceptions::backend_connect_failure(
+      "Failed to connect to " + backend_name
+    );
+  }
+
   m_current_backend = backend_name;
 }
 

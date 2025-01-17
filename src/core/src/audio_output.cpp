@@ -22,6 +22,11 @@ void AudioOutput::connect_backend()
     {
       continue;
     }
+    catch (BackendExceptions::backend_connect_failure& exception)
+    {
+      // Also log this as a warning.
+      continue;
+    }
   }
 
   throw AudioOutputExceptions::no_requested_backends();

@@ -39,7 +39,9 @@ TEST_F(AudioOutputTest, ConnectsToFirstBackend)
 }
 
 
-TEST_F(AudioOutputTest, ConnectsToFirstAvaliableBackend)
+// Note that strings not in the avaliable backends will be treated as unavaliable
+// and therefore covered by this test.
+TEST_F(AudioOutputTest, ConnectsToFirstAvaliableBackendWhenPreferredUnavaliable)
 {
   m_backend.set_backend_status("First Backend", BackendStatus::UNAVALIABLE);
 
@@ -58,4 +60,14 @@ TEST_F(AudioOutputTest, ThrowsNoAudioOutputExceptionWhenAllBackendsUnavaliable)
     m_audio_output.connect_backend(),
     AudioOutputExceptions::no_requested_backends
   );
+}
+
+
+TEST_F(AudioOutputTest, ConnectsToFirstAvaliableBackendWhenPreferredErroring)
+{
+  m_backend.set_backend_status("First Backend", BackendStatus::ERROR);
+
+  m_audio_output.connect_backend();
+
+  EXPECT_EQ(m_audio_output.get_connected_backend(), "Second Backend");
 }
