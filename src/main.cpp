@@ -1,35 +1,49 @@
 #include <iostream>
-#include <unordered_set>
 #include <string>
+#include <vector>
 
-#include "core/soundio_audio_backend.h"
+#include <soundio/soundio.h>
+
+#include "core/audio_backend_soundio.h"
 
 
-void discover_availiable_backends(const SoundioAudioBackend& backend)
+void
+  try_backend(SoundIoBackend backend_id)
 {
-  std::unordered_set<std::string> avaliable_backends = backend.get_avaliable_backends(); 
+  // Will get this via a factory later.
+  const std::string name = soundio_backend_name(backend_id);
 
-  std::cout << "Avaliable backends: \n";
-  for (const std::string& avaliable_backend: avaliable_backends)
+  try
   {
-    std::cout << "\t" << avaliable_backend << "\n";
+    // Will also get this via a factory later.
+    const resonance_core::AudioBackendSoundIo backend(backend_id);
+
+    std::cout << "Connected to " << name << " successfully. Listing devices...\n";
+
+    const std::vector<std::string> device_names = backend.get_output_device_names();
+
+    for (const std::string& name: device_names) {
+      std::cout << name << "\n";
+    }
+  }
+  catch (const resonance_core::AudioBackendConnectionException& exception)
+  {
+    std::cout << "Failed to connect to " << name << ":\n";
+    std::cout << "\t" << exception.what() << "\n";
   }
 }
 
 
-int main()
+int
+  main()
 {
   std::cout << "Welcome to Resonance!\n";
 
-  SoundioAudioBackend backend;
-  
-  discover_availiable_backends(backend);
-/*
-  std::cout << "Connecting to best avaliable backend.\n";
+  std::cout << "Checking avaliability of backends:\n";
 
-  backend_manager.connect_to_first_avaliable_backend();
-
-  const OutputBackend backend = backend_manager.get_connected_backend();
-  std::cout << "Connected to " << backend_manager.get_backend_name(backend) << std::endl;
-*/
+  try_backend(SoundIoBackendJack);
+  try_backend(SoundIoBackendPulseAudio);
+  try_backend(SoundIoBackendAlsa);
+  try_backend(SoundIoBackendCoreAudio);
+  try_backend(SoundIoBackendWasapi);
 }
