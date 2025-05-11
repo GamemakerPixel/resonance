@@ -4,7 +4,7 @@
 #include <stdexcept>
 #include <string>
 #include <unordered_map>
-#include <vector>
+#include <unordered_set>
 
 #include "core/audio_backend.h"
 
@@ -23,13 +23,18 @@ void
     );
   }
 
-  m_backend_constructors.insert({name, constructor});
+  m_backend_constructors.emplace(name, constructor);
 }
 
-std::vector<std::string>
+std::unordered_set<std::string>
   BackendFactory::get_backend_names() const
 {
-  std::vector<std::string> names;
+  std::unordered_set<std::string> names;
+
+  for (const auto& [name, _]: m_backend_constructors)
+  {
+    names.insert(name);
+  }
 
   return names;
 }

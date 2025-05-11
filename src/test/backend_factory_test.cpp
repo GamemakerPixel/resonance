@@ -3,7 +3,7 @@
 
 #include <memory>
 #include <string>
-#include <vector>
+#include <unordered_set>
 
 #include "core/audio_backend.h"
 
@@ -42,7 +42,7 @@ TEST(BackendFactoryTest, BackendNamesEmpty)
 {
   const BackendFactory factory;
 
-  std::vector<std::string> names = factory.get_backend_names();
+  std::unordered_set<std::string> names = factory.get_backend_names();
 
   EXPECT_TRUE(names.empty());
 }
@@ -87,4 +87,26 @@ TEST(BackendFactoryTest, ThrowsDuplicateBackendWhenNameDuplicated)
     factory.register_backend(backend_name, make_constructor(1)),
     DuplicateBackendException
   );
+}
+
+
+TEST(BackendFactoryTest, ReturnsBackendNames)
+{
+  BackendFactory factory;
+
+  const int backend_count = 5;
+  const std::string backend_prefix = "Mock Backend ";
+  std::unordered_set<std::string> expected_names;
+
+  for (int backend_index = 0; backend_index < backend_count; backend_index++)
+  {
+    const std::string backend_name = backend_prefix + std::to_string(backend_index);
+
+    expected_names.insert(backend_name);
+    factory.register_backend(backend_name, make_constructor(backend_index));
+  }
+
+  std::unordered_set<std::string> actual_names = factory.get_backend_names();
+
+  EXPECT_EQ(expected_names, actual_names);
 }

@@ -5,7 +5,7 @@
 #include <stdexcept>
 #include <string>
 #include <unordered_map>
-#include <vector>
+#include <unordered_set>
 
 
 namespace resonance_core
@@ -24,7 +24,7 @@ public:
   void
     register_backend(std::string name, AudioBackendConstructor constructor);
 
-  std::vector<std::string>
+  std::unordered_set<std::string>
     get_backend_names() const;
 
   std::unique_ptr<AudioBackend>
