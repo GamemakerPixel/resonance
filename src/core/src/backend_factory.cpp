@@ -47,7 +47,30 @@ std::unique_ptr<AudioBackend>
     throw InvalidBackendNameException(backend_name + " is not a known backend");
   }
 
-  std::unique_ptr<AudioBackend> backend = m_backend_constructors.at(backend_name)();
+  try
+  {
+    std::unique_ptr<AudioBackend> backend = m_backend_constructors.at(backend_name)();
 
-  return backend;
+    if (!backend)
+    {
+      throw BackendConstructionException(
+        "Created backend (" + backend_name + ") was nullptr"
+      );
+    }
+
+    return backend;
+  }
+  catch (const std::exception& exception)
+  {
+    throw BackendConstructionException(
+      "An exception was thrown while constructing \"" + backend_name + "\":\n"
+      + exception.what()
+    );
+  }
+  catch (...)
+  {
+    throw BackendConstructionException(
+      "An exception was thrown while constructing \"" + backend_name + "\"."
+    );
+  }
 }

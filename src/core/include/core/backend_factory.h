@@ -45,4 +45,11 @@ public:
     : std::logic_error(message) {}
 };
 
+class BackendConstructionException: public std::runtime_error
+{
+public:
+  BackendConstructionException(const std::string& message)
+    : std::runtime_error(message) {}
+};
+
 }

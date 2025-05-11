@@ -7,7 +7,13 @@ using namespace mock_backends;
 
 
 AudioBackend::AudioBackend(int id)
-  : m_id(id) {}
+  : m_id(id)
+{
+  if (id < 0)
+  {
+    throw std::runtime_error("ID cannot be less than 0");
+  }
+}
 
 
 std::vector<std::string>

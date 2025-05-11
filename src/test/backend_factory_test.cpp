@@ -2,6 +2,7 @@
 #include "core/backend_factory.h"
 
 #include <memory>
+#include <stdexcept>
 #include <string>
 #include <unordered_set>
 
@@ -109,4 +110,40 @@ TEST(BackendFactoryTest, ReturnsBackendNames)
   std::unordered_set<std::string> actual_names = factory.get_backend_names();
 
   EXPECT_EQ(expected_names, actual_names);
+}
+
+
+TEST(BackendFactoryTest, ThrowsBackendConstructionWhenNull)
+{
+  BackendFactory factory;
+
+  const std::string backend_name = "Mock Backend 0";
+
+  const BackendConstructor constructor([]()
+  {
+    return MockBackendPtr(nullptr);
+  });
+
+  factory.register_backend(backend_name, constructor);
+
+  EXPECT_THROW(
+    factory.construct_backend(backend_name),
+    BackendConstructionException
+  );
+}
+
+
+TEST(BackendFactoryTest, ThrowsBackendConstructionWhenConstructorThrowsException)
+{
+  BackendFactory factory;
+
+  const std::string backend_name = "Mock Backend -1";
+
+  // Mocked AudioBackend is set up to throw a std::runtime_error when id is below 0.
+  factory.register_backend(backend_name, make_constructor(-1));
+
+  EXPECT_THROW(
+    factory.construct_backend(backend_name),
+    BackendConstructionException
+  );
 }
