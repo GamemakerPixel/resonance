@@ -25,7 +25,7 @@ static BackendConstructor
 {
   return [id]()
   {
-    return std::make_unique<mock_backends::AudioBackend>(id);
+    return std::make_unique<mock_backends::AudioBackend>(id, 0);
   };
 }
 
@@ -146,4 +146,26 @@ TEST(BackendFactoryTest, ThrowsBackendConstructionWhenConstructorThrowsException
     factory.construct_backend(backend_name),
     BackendConstructionException
   );
+}
+
+
+TEST(BackendFactoryTest, ShowsRegisteredBackendAsSupported)
+{
+  BackendFactory factory;
+
+  const std::string backend_name = "Mock Backend 0";
+
+  factory.register_backend(backend_name, make_constructor(0));
+
+  EXPECT_TRUE(factory.is_backend_supported(backend_name));
+}
+
+
+TEST(BackendFactoryTest, ShowsNotRegisteredBackendAsNotSupported)
+{
+  BackendFactory factory;
+
+  const std::string backend_name = "Mock Backend 0";
+
+  EXPECT_FALSE(factory.is_backend_supported(backend_name));
 }

@@ -24,11 +24,14 @@ public:
   void
     register_backend(std::string name, AudioBackendConstructor constructor);
 
+  bool
+    is_backend_supported(const std::string& name) const;
+
   std::unordered_set<std::string>
     get_backend_names() const;
 
   std::unique_ptr<AudioBackend>
-  construct_backend(const std::string& backend_name) const;
+    construct_backend(const std::string& backend_name) const;
 };
 
 class InvalidBackendNameException: public std::logic_error

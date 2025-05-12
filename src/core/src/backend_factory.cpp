@@ -26,6 +26,12 @@ void
   m_backend_constructors.emplace(name, constructor);
 }
 
+bool
+  BackendFactory::is_backend_supported(const std::string& name) const
+{
+  return m_backend_constructors.contains(name);
+}
+
 std::unordered_set<std::string>
   BackendFactory::get_backend_names() const
 {
