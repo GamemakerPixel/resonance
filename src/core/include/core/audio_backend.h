@@ -3,7 +3,7 @@
 #include <memory>
 #include <stdexcept>
 #include <string>
-#include <vector>
+#include <unordered_set>
 
 
 namespace resonance_core {
@@ -13,7 +13,7 @@ public:
   virtual
     ~AudioBackend() = default;
 
-  virtual std::vector<std::string>
+  virtual std::unordered_set<std::string>
     get_output_device_names() const = 0;
 
   /*
