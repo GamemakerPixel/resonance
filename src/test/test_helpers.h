@@ -33,6 +33,8 @@ using CoreBackendUPtr = std::unique_ptr<resonance_core::AudioBackend>;
 using MockBackendUPtr = std::unique_ptr<mock_backends::AudioBackend>;
 using CoreBackendSPtr = std::shared_ptr<resonance_core::AudioBackend>;
 using MockBackendSPtr = std::shared_ptr<mock_backends::AudioBackend>;
+using CoreOutputDeviceUPtr = std::unique_ptr<resonance_core::AudioOutputDevice>;
+using MockOutputDeviceUPtr = std::unique_ptr<mock_backends::AudioOutputDevice>;
 using CoreOutputDeviceSPtr = std::shared_ptr<resonance_core::AudioOutputDevice>;
 using MockOutputDeviceSPtr = std::shared_ptr<mock_backends::AudioOutputDevice>;
 

@@ -6,6 +6,7 @@ if (BUILD_TESTING)
   target_link_libraries(${PROJECT_NAME}_tests PRIVATE ${PROJECT_NAME}_core)
   target_link_libraries(${PROJECT_NAME}_tests PRIVATE ${PROJECT_NAME}_tests_mock_backends)
   target_sources(${PROJECT_NAME}_tests PRIVATE
+    audio_output_device_test.cpp
     backend_factory_test.cpp
     backend_loader_test.cpp
     backend_manager_test.cpp
