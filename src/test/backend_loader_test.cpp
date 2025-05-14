@@ -9,26 +9,9 @@
 
 #include "mock_backends/audio_backend.h"
 
-#include <iostream>
+#include "test_helpers.h"
 
 using namespace resonance_core;
-
-
-using BackendConstructor =
-  std::function<std::unique_ptr<mock_backends::AudioBackend>()>;
-
-using CoreBackendPtr = std::shared_ptr<AudioBackend>;
-using MockBackendPtr = std::shared_ptr<mock_backends::AudioBackend>;
-
-
-static BackendConstructor
-  make_constructor(int id, int device_count)
-{
-  return [id, device_count]()
-  {
-    return std::make_unique<mock_backends::AudioBackend>(id, device_count);
-  };
-}
 
 
 class BackendLoaderTest: public testing::Test
@@ -51,7 +34,7 @@ protected:
 
       factory->register_backend(
         backend_name,
-        make_constructor(backend_index, device_count)
+        test_help::make_constructor(backend_index, device_count)
       );
     }
 
@@ -62,7 +45,7 @@ protected:
 
 TEST_F(BackendLoaderTest, ReturnsInstanceOfRequestedBackend)
 {
-  MockBackendPtr backend = std::static_pointer_cast<mock_backends::AudioBackend>(
+  test_help::MockBackendSPtr backend = std::static_pointer_cast<mock_backends::AudioBackend>(
     m_loader->load_backend("Mock Backend 2")
   );
 
@@ -74,11 +57,11 @@ TEST_F(BackendLoaderTest, ReusesBackendPointerWhenItIsAlive)
 {
   const std::string backend_name = "Mock Backend 2";
 
-  MockBackendPtr expected_backend =
+  test_help::MockBackendSPtr expected_backend =
     std::static_pointer_cast<mock_backends::AudioBackend>(
       m_loader->load_backend(backend_name));
 
-  MockBackendPtr recieved_backend =
+  test_help::MockBackendSPtr recieved_backend =
     std::static_pointer_cast<mock_backends::AudioBackend>(
       m_loader->load_backend(backend_name));
 
@@ -96,16 +79,27 @@ TEST_F(BackendLoaderTest, MakesNewBackendInstanceWhenOriginalIsDead)
   int first_backend_instance_id;
 
   {
-    MockBackendPtr first_backend =
+    test_help::MockBackendSPtr first_backend =
       std::static_pointer_cast<mock_backends::AudioBackend>(
         m_loader->load_backend(backend_name));
 
     first_backend_instance_id = first_backend->get_unique_instance_id();
   }
 
-  MockBackendPtr recieved_backend =
+  test_help::MockBackendSPtr recieved_backend =
     std::static_pointer_cast<mock_backends::AudioBackend>(
       m_loader->load_backend(backend_name));
 
   EXPECT_NE(first_backend_instance_id, recieved_backend->get_unique_instance_id());
 }
+
+/*
+TEST_F(BackendLoaderTest, ReturnsInstanceOfRequestedDevice)
+{
+  MockDevicePtr device = std::static_pointer_cast<mock_backends::AudioOutputDevice>(
+    m_loader->load_device("Mock Backend 1", "Mock Device 1-1")
+  );
+
+  EXPECT_EQ({1, 1}, device->get_id());
+}
+*/

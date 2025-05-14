@@ -1,0 +1,65 @@
+#pragma once
+
+#include <functional>
+#include <memory>
+
+#include "mock_backends/audio_backend.h"
+
+
+namespace resonance_core
+{
+
+class AudioBackend;
+class AudioOutputDevice;
+
+}
+
+
+namespace mock_backends
+{
+
+class AudioOutputDevice;
+
+}
+
+
+namespace test_help
+{
+
+using BackendConstructor =
+  std::function<std::unique_ptr<mock_backends::AudioBackend>()>;
+
+using CoreBackendUPtr = std::unique_ptr<resonance_core::AudioBackend>;
+using MockBackendUPtr = std::unique_ptr<mock_backends::AudioBackend>;
+using CoreBackendSPtr = std::shared_ptr<resonance_core::AudioBackend>;
+using MockBackendSPtr = std::shared_ptr<mock_backends::AudioBackend>;
+using CoreOutputDeviceSPtr = std::shared_ptr<resonance_core::AudioOutputDevice>;
+using MockOutputDeviceSPtr = std::shared_ptr<mock_backends::AudioOutputDevice>;
+
+
+static BackendConstructor
+  make_constructor(int id, int device_count)
+{
+  return [id, device_count]()
+  {
+    return std::make_unique<mock_backends::AudioBackend>(id, device_count);
+  };
+}
+
+
+static BackendConstructor
+  make_constructor(int id)
+{
+  return make_constructor(id, 0);
+}
+
+
+static MockBackendUPtr
+  cast_to_mocked_backend(CoreBackendUPtr backend)
+{
+  return MockBackendUPtr(
+    static_cast<mock_backends::AudioBackend*>(backend.release())
+  );
+}
+
+}

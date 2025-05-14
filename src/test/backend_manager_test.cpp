@@ -9,21 +9,9 @@
 
 #include "mock_backends/audio_backend.h"
 
+#include "test_helpers.h"
+
 using namespace resonance_core;
-
-
-using BackendConstructor =
-  std::function<std::unique_ptr<mock_backends::AudioBackend>()>;
-
-
-static BackendConstructor
-  make_constructor(int id, int device_count)
-{
-  return [id, device_count]()
-  {
-    return std::make_unique<mock_backends::AudioBackend>(id, device_count);
-  };
-}
 
 
 class BackendManagerTest : public testing::Test
@@ -46,7 +34,7 @@ protected:
 
       factory->register_backend(
         backend_name,
-        make_constructor(backend_index, device_count)
+        test_help::make_constructor(backend_index, device_count)
       );
     }
 
