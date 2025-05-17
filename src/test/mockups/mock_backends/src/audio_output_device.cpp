@@ -1,6 +1,7 @@
 #include "mock_backends/audio_output_device.h"
 
 #include <memory>
+#include <utility>
 
 #include "core/audio_output_device.h"
 
@@ -9,5 +10,13 @@
 using namespace mock_backends;
 
 
-AudioOutputDevice::AudioOutputDevice(std::shared_ptr<AudioBackend> backend)
-  : resonance_core::AudioOutputDevice(backend) {}
+AudioOutputDevice::AudioOutputDevice(
+  std::pair<int, int> id
+) : m_id(id) {}
+
+
+std::pair<int, int>
+  AudioOutputDevice::get_id() const
+{
+  return m_id;
+}

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <utility>
 
 #include "core/audio_output_device.h"
 
@@ -12,8 +13,16 @@ class AudioBackend;
 
 class AudioOutputDevice: public resonance_core::AudioOutputDevice
 {
+private:
+  std::pair<int, int> m_id;
+
 public:
-  AudioOutputDevice(std::shared_ptr<AudioBackend> backend);
+  AudioOutputDevice(
+    std::pair<int, int> id
+  );
+
+  std::pair<int, int>
+    get_id() const;
 };
 
 }
