@@ -8,6 +8,8 @@
 
 namespace resonance_core {
 
+class AudioOutputDevice;
+
 class AudioBackend {
 public:
   virtual
@@ -16,18 +18,21 @@ public:
   virtual std::unordered_set<std::string>
     get_output_device_names() const = 0;
 
-  /*
-  virtual std::shared_ptr<OutputDevice>
-    get_output_device(int device_index) const = 0;
-
-  virtual std::shared_ptr<OutputDevice>
-    get_default_output_device() const = 0;
-  */
+  virtual std::unique_ptr<AudioOutputDevice>
+    create_output_device(const std::string& name) const = 0;
 };
 
-class AudioBackendConnectionException : public std::runtime_error {
+class AudioBackendConnectionException: public std::runtime_error
+{
 public:
   AudioBackendConnectionException(const std::string& message)
+    : std::runtime_error(message) {}
+};
+
+class DeviceNotAvaliableException: public std::runtime_error
+{
+public:
+  DeviceNotAvaliableException(const std::string& message)
     : std::runtime_error(message) {}
 };
 

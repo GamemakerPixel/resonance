@@ -14,7 +14,7 @@ class AudioBackend;
 class AudioOutputDevice: public resonance_core::AudioOutputDevice
 {
 private:
-  std::pair<int, int> m_id;
+  const std::pair<int, int> m_id;
 
 public:
   AudioOutputDevice(

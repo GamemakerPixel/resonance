@@ -5,6 +5,7 @@
 #include <unordered_map>
 
 #include "core/audio_backend.h"
+#include "core/audio_output_device.h"
 #include "core/backend_factory.h"
 
 using namespace resonance_core;
@@ -31,4 +32,13 @@ std::shared_ptr<AudioBackend>
   m_backends.insert_or_assign(backend, new_backend);
 
   return new_backend;
+}
+
+
+std::shared_ptr<AudioOutputDevice>
+  BackendLoader::load_device(const std::string& backend, const std::string& device)
+{
+  std::shared_ptr<AudioBackend> loaded_backend = load_backend(backend);
+
+  return loaded_backend->create_output_device(device);
 }

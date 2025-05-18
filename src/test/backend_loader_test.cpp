@@ -4,10 +4,12 @@
 #include <memory>
 #include <string>
 #include <unordered_set>
+#include <utility>
 
 #include "core/backend_factory.h"
 
 #include "mock_backends/audio_backend.h"
+#include "mock_backends/audio_output_device.h"
 
 #include "test_helpers.h"
 
@@ -93,13 +95,12 @@ TEST_F(BackendLoaderTest, MakesNewBackendInstanceWhenOriginalIsDead)
   EXPECT_NE(first_backend_instance_id, recieved_backend->get_unique_instance_id());
 }
 
-/*
+
 TEST_F(BackendLoaderTest, ReturnsInstanceOfRequestedDevice)
 {
-  MockDevicePtr device = std::static_pointer_cast<mock_backends::AudioOutputDevice>(
-    m_loader->load_device("Mock Backend 1", "Mock Device 1-1")
-  );
+  test_help::MockOutputDeviceSPtr device = std::static_pointer_cast<
+    mock_backends::AudioOutputDevice
+  >(m_loader->load_device("Mock Backend 1", "Mock Device 1-1"));
 
-  EXPECT_EQ({1, 1}, device->get_id());
+  EXPECT_EQ(std::make_pair(1, 1), device->get_id());
 }
-*/
