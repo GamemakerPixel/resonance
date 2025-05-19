@@ -96,11 +96,80 @@ TEST_F(BackendLoaderTest, MakesNewBackendInstanceWhenOriginalIsDead)
 }
 
 
-TEST_F(BackendLoaderTest, ReturnsInstanceOfRequestedDevice)
+TEST_F(BackendLoaderTest, ReturnsInstanceOfRequestedOutputDevice)
 {
   test_help::MockOutputDeviceSPtr device = std::static_pointer_cast<
     mock_backends::AudioOutputDevice
-  >(m_loader->load_device("Mock Backend 1", "Mock Device 1-1"));
+  >(m_loader->load_output_device("Mock Backend 1", "Mock Device 1-1"));
 
   EXPECT_EQ(std::make_pair(1, 1), device->get_id());
+}
+
+
+TEST_F(BackendLoaderTest, ReusesOutputDevicePointerWhenItIsAlive)
+{
+  const std::string backend_name = "Mock Backend 2";
+  const std::string device_name = "Mock Device 2-0";
+
+  test_help::MockOutputDeviceSPtr expected_device =
+    std::static_pointer_cast<mock_backends::AudioOutputDevice>(
+      m_loader->load_output_device(backend_name, device_name));
+
+  test_help::MockOutputDeviceSPtr recieved_device =
+    std::static_pointer_cast<mock_backends::AudioOutputDevice>(
+      m_loader->load_output_device(backend_name, device_name));
+
+  EXPECT_EQ(
+    expected_device->get_unique_instance_id(),
+    recieved_device->get_unique_instance_id()
+  );
+}
+
+
+TEST_F(BackendLoaderTest, MakesNewOutputDeviceInstanceWhenOriginalIsDead)
+{
+  const std::string backend_name = "Mock Backend 2";
+  const std::string device_name = "Mock Device 2-0";
+
+  int first_device_instance_id;
+
+  {
+    test_help::MockOutputDeviceSPtr first_device =
+      std::static_pointer_cast<mock_backends::AudioOutputDevice>(
+        m_loader->load_output_device(backend_name, device_name));
+
+    first_device_instance_id = first_device->get_unique_instance_id();
+  }
+
+  test_help::MockOutputDeviceSPtr recieved_device =
+    std::static_pointer_cast<mock_backends::AudioOutputDevice>(
+      m_loader->load_output_device(backend_name, device_name));
+
+  EXPECT_NE(first_device_instance_id, recieved_device->get_unique_instance_id());
+}
+
+
+TEST_F(BackendLoaderTest, DeviceKeepsBackendInstanceAlive)
+{
+  const std::string backend_name = "Mock Backend 2";
+  const std::string device_name = "Mock Device 2-0";
+
+  int first_backend_instance_id;
+  test_help::CoreOutputDeviceSPtr device;
+
+  {
+    test_help::MockBackendSPtr first_backend =
+      std::static_pointer_cast<mock_backends::AudioBackend>(
+        m_loader->load_backend(backend_name));
+
+    first_backend_instance_id = first_backend->get_unique_instance_id();
+
+    device = m_loader->load_output_device(backend_name, device_name);
+  }
+
+  test_help::MockBackendSPtr recieved_backend =
+    std::static_pointer_cast<mock_backends::AudioBackend>(
+      m_loader->load_backend(backend_name));
+
+  EXPECT_EQ(first_backend_instance_id, recieved_backend->get_unique_instance_id());
 }

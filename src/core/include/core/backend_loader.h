@@ -4,6 +4,8 @@
 #include <string>
 #include <unordered_map>
 
+#include "core/abstract_subscription_ptr.h"
+
 
 namespace resonance_core
 {
@@ -17,9 +19,12 @@ class BackendLoader
 private:
   const std::shared_ptr<const BackendFactory> m_factory;
 
-  std::unordered_map<std::string, std::weak_ptr<AudioBackend>> m_backends;
+  std::unordered_map<std::string, AbstractSubscriptionPtr<AudioBackend>> m_backends;
   std::unordered_map<
-    std::string, std::unordered_map<std::string, std::weak_ptr<AudioOutputDevice>>
+    std::string, std::unordered_map<
+      std::string,
+      AbstractSubscriptionPtr<AudioOutputDevice>
+    >
   > m_output_devices;
 
 public:
@@ -29,7 +34,7 @@ public:
     load_backend(const std::string& backend);
 
   std::shared_ptr<AudioOutputDevice>
-    load_device(const std::string& backend, const std::string& device);
+    load_output_device(const std::string& backend, const std::string& device);
 };
 
 }

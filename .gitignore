@@ -51,3 +51,6 @@ CMakeUserPresets.json
 # Generated Documentation
 docs/html/
 docs/latex/
+
+# clangd cache
+.cache/

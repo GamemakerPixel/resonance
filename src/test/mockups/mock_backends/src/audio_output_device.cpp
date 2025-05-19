@@ -10,13 +10,26 @@
 using namespace mock_backends;
 
 
+int AudioOutputDevice::instance_count = 0;
+
+
 AudioOutputDevice::AudioOutputDevice(
   std::pair<int, int> id
-) : m_id(id) {}
+) : m_id(id), m_unique_instance_id(instance_count)
+{
+  instance_count++;
+}
 
 
 std::pair<int, int>
   AudioOutputDevice::get_id() const
 {
   return m_id;
+}
+
+
+int
+  AudioOutputDevice::get_unique_instance_id() const
+{
+  return m_unique_instance_id;
 }
