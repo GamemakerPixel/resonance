@@ -5,13 +5,17 @@
 #include <unordered_map>
 
 #include "core/abstract_subscription_ptr.h"
+#include "core/audio_data_type.h"
+#include "core/audio_interface_spec.h"
 
 
 namespace resonance_core
 {
 
 class AudioBackend;
+class AudioChannelLayout;
 class AudioOutputDevice;
+class AudioOutputStream;
 class BackendFactory;
 
 class BackendLoader
@@ -35,6 +39,15 @@ public:
 
   std::shared_ptr<AudioOutputDevice>
     load_output_device(const std::string& backend, const std::string& device);
+
+  // data_type, layout, and sample_rate should be passed after negotiation, this should
+  // fail if the device doesn't support these exact parameters.
+  std::shared_ptr<AudioOutputStream>
+    create_output_stream(
+      const std::string& backend,
+      const std::string& device,
+      const AudioInterfaceSpec& spec
+    );
 };
 
 }

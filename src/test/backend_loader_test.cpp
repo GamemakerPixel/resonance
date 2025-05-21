@@ -1,15 +1,21 @@
 #include <gtest/gtest.h>
+#include "core/audio_channel_layout.h"
+#include "core/audio_data_type.h"
+#include "core/audio_interface_spec.h"
 #include "core/backend_loader.h"
 
 #include <memory>
 #include <string>
-#include <unordered_set>
 #include <utility>
 
+#include "core/audio_channel_layout.h"
+#include "core/audio_data_type.h"
+#include "core/audio_interface_spec.h"
 #include "core/backend_factory.h"
 
 #include "mock_backends/audio_backend.h"
 #include "mock_backends/audio_output_device.h"
+#include "mock_backends/audio_output_stream.h"
 
 #include "test_helpers.h"
 
@@ -172,4 +178,51 @@ TEST_F(BackendLoaderTest, DeviceKeepsBackendInstanceAlive)
       m_loader->load_backend(backend_name));
 
   EXPECT_EQ(first_backend_instance_id, recieved_backend->get_unique_instance_id());
+}
+
+
+TEST_F(BackendLoaderTest, ReturnsInstanceOfRequestedOutputStream)
+{
+  const AudioInterfaceSpec spec(
+    AudioDataType::FLOAT32,
+    standard_layouts::stereo,
+    44100u
+  );
+
+  test_help::MockOutputStreamSPtr stream = std::static_pointer_cast<
+    mock_backends::AudioOutputStream
+  >(m_loader->create_output_stream("Mock Backend 1", "Mock Device 1-1", spec));
+
+  EXPECT_EQ(std::make_pair(1, 1), stream->get_device_id());
+}
+
+
+TEST_F(BackendLoaderTest, StreamKeepsDeviceInstanceAlive)
+{
+  const std::string backend_name = "Mock Backend 2";
+  const std::string device_name = "Mock Device 2-0";
+  const AudioInterfaceSpec spec(
+    AudioDataType::FLOAT32,
+    standard_layouts::stereo,
+    44100u
+  );
+
+  int first_device_instance_id;
+  test_help::CoreOutputStreamSPtr stream;
+
+  {
+    test_help::MockOutputDeviceSPtr first_device =
+      std::static_pointer_cast<mock_backends::AudioOutputDevice>(
+        m_loader->load_output_device(backend_name, device_name));
+
+    first_device_instance_id = first_device->get_unique_instance_id();
+
+    stream = m_loader->create_output_stream(backend_name, device_name, spec);
+  }
+
+  test_help::MockOutputDeviceSPtr recieved_device=
+    std::static_pointer_cast<mock_backends::AudioOutputDevice>(
+      m_loader->load_output_device(backend_name, device_name));
+
+  EXPECT_EQ(first_device_instance_id, recieved_device->get_unique_instance_id());
 }

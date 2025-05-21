@@ -3,13 +3,20 @@
 #include <memory>
 #include <utility>
 
+#include "core/audio_interface_spec.h"
 #include "core/audio_output_device.h"
+
+
+namespace resonance_core
+{
+
+class AudioOutputStream;
+
+}
 
 
 namespace mock_backends
 {
-
-class AudioBackend;
 
 class AudioOutputDevice: public resonance_core::AudioOutputDevice
 {
@@ -23,6 +30,9 @@ public:
   AudioOutputDevice(
     std::pair<int, int> id
   );
+  
+  std::unique_ptr<resonance_core::AudioOutputStream>
+    create_stream(resonance_core::AudioInterfaceSpec spec) const override;
 
   std::pair<int, int>
     get_id() const;

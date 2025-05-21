@@ -7,6 +7,7 @@
 #include "core/abstract_subscription_ptr.h"
 #include "core/audio_backend.h"
 #include "core/audio_output_device.h"
+#include "core/audio_output_stream.h"
 #include "core/backend_factory.h"
 
 using namespace resonance_core;
@@ -86,4 +87,23 @@ std::shared_ptr<AudioOutputDevice>
   m_backends.at(backend).subscribe_to_depender(*new_device);
 
   return new_device;
+}
+
+
+std::shared_ptr<AudioOutputStream>
+  BackendLoader::create_output_stream(
+    const std::string& backend,
+    const std::string& device,
+    const AudioInterfaceSpec& spec
+  )
+{
+  std::shared_ptr<AudioOutputDevice> loaded_device = load_output_device(
+    backend, device
+  );
+
+  std::unique_ptr<AudioOutputStream> stream = loaded_device->create_stream(spec);
+
+  m_output_devices.at(backend).at(device).subscribe_to_depender(*stream);
+
+  return std::shared_ptr<AudioOutputStream>(std::move(stream));
 }

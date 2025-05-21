@@ -11,6 +11,7 @@ namespace resonance_core
 
 class AudioBackend;
 class AudioOutputDevice;
+class AudioOutputStream;
 
 }
 
@@ -19,6 +20,7 @@ namespace mock_backends
 {
 
 class AudioOutputDevice;
+class AudioOutputStream;
 
 }
 
@@ -37,6 +39,10 @@ using CoreOutputDeviceUPtr = std::unique_ptr<resonance_core::AudioOutputDevice>;
 using MockOutputDeviceUPtr = std::unique_ptr<mock_backends::AudioOutputDevice>;
 using CoreOutputDeviceSPtr = std::shared_ptr<resonance_core::AudioOutputDevice>;
 using MockOutputDeviceSPtr = std::shared_ptr<mock_backends::AudioOutputDevice>;
+using CoreOutputStreamUPtr = std::unique_ptr<resonance_core::AudioOutputStream>;
+using MockOutputStreamUPtr = std::unique_ptr<mock_backends::AudioOutputStream>;
+using CoreOutputStreamSPtr = std::shared_ptr<resonance_core::AudioOutputStream>;
+using MockOutputStreamSPtr = std::shared_ptr<mock_backends::AudioOutputStream>;
 
 
 static BackendConstructor
