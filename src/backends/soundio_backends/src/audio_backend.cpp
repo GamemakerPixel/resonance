@@ -1,13 +1,14 @@
 #include "soundio_backends/audio_backend.h"
 
 #include <memory>
-#include <stdexcept>
 #include <string>
 #include <unordered_set>
 
 #include <soundio/soundio.h>
 
 #include "core/audio_backend.h"
+
+#include "soundio_backends/audio_output_device.h"
 
 using namespace soundio_backends;
 
@@ -53,4 +54,43 @@ std::unordered_set<std::string>
   }
 
   return names;
+}
+
+
+std::unique_ptr<resonance_core::AudioOutputDevice>
+  AudioBackend::create_output_device(const std::string& name) const
+{
+  soundio_flush_events(m_context.get());
+
+  const int device_count = soundio_output_device_count(m_context.get());
+
+  int found_device_index = -1;
+
+  for (int device_index = 0; device_index < device_count; device_index++)
+  {
+    std::unique_ptr<SoundIoDevice, void(*)(SoundIoDevice*)> device(
+      soundio_get_output_device(m_context.get(), device_index),
+      &soundio_device_unref
+    );
+
+    if (device->name == name)
+    {
+      found_device_index = device_index;
+      break;
+    }
+  }
+
+  if (found_device_index == -1)
+  {
+    throw resonance_core::DeviceNotAvaliableException(
+      name + " is not an avaliable device"
+    );
+  }
+
+  std::unique_ptr<SoundIoDevice, void(*)(SoundIoDevice*)> device(
+    soundio_get_output_device(m_context.get(), found_device_index),
+    &soundio_device_unref
+  );
+
+  return std::make_unique<AudioOutputDevice>(std::move(device));
 }

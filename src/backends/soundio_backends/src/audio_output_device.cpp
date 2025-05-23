@@ -1,38 +1,40 @@
-#include "core/audio_output_device_soundio.h"
+#include "soundio_backends/audio_output_device.h"
 
-#include <cstdint>
 #include <memory>
 
-using namespace resonance_core;
+#include <soundio/soundio.h>
+
+#include "core/audio_output_device.h"
+
+#include "soundio_backends/audio_output_stream.h"
+
+using namespace soundio_backends;
 
 
-AudioOutputDeviceSoundIo::AudioOutputDeviceSoundIo(
-  const SoundIo& context,
-  int device_index
-) : m_device(soundio_get_output_device(&context, device_index), &soundio_device_unref)
+AudioOutputDevice::AudioOutputDevice(
+  std::unique_ptr<SoundIoDevice, void(*)(SoundIoDevice*)> device
+) : m_device(std::move(device))
 {
-  if (!m_device)
-  {
-    //Error
-  }
-
   if (m_device->probe_error != SoundIoErrorNone)
   {
-    //Error
+    throw resonance_core::OutputDeviceConnectionException(
+      soundio_strerror(m_device->probe_error)
+    );
   }
 }
 
 
-std::unique_ptr<AudioOutputStream>
-  AudioOutputDeviceSoundIo::get_stream()
+std::unique_ptr<resonance_core::AudioOutputStream>
+  AudioOutputDevice::create_stream(
+    const resonance_core::AudioInterfaceSpec& spec
+  ) const
 {
+  // TODO: Validate spec works for device.
 
-}
+  std::unique_ptr<SoundIoOutStream, void(*)(SoundIoOutStream*)> stream(
+    soundio_outstream_create(m_device.get()),
+    &soundio_outstream_destroy
+  );
 
-
-std::size_t
-  AudioOutputDeviceSoundIo::get_backend_relative_hash()
-{
-  std::size_t id_hash = std::hash<std::string>(m_device->id);
-  std::size_t 
+  return std::make_unique<AudioOutputStream>(std::move(stream), spec);
 }

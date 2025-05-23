@@ -2,9 +2,19 @@
 #include <string>
 #include <unordered_set>
 
+#include "core/audio_channel_layout.h"
+#include "core/audio_data_type.h"
+#include "core/audio_interface_spec.h"
+#include "core/audio_output_stream.h"
 #include "core/backend_factory.h"
 #include "core/backend_manager.h"
 #include "soundio_backends/soundio_backends.h"
+
+
+void register_backends(resonance_core::BackendFactory& factory)
+{
+  soundio_backends::register_backends(factory);
+}
 
 
 int
@@ -14,29 +24,18 @@ int
 
   auto factory = std::make_unique<resonance_core::BackendFactory>();
 
-  soundio_backends::register_backends(*factory);
+  register_backends(*factory);
 
   auto manager = std::make_unique<resonance_core::BackendManager>(std::move(factory));
 
-  std::unordered_set<std::string> backend_names = manager->get_backend_names();
+  resonance_core::AudioInterfaceSpec spec(
+    resonance_core::AudioDataType::FLOAT32,
+    resonance_core::standard_layouts::stereo,
+    44100u
+  );
 
-  std::cout << "Avaliable Backends:\n";
-  for (const std::string& name: backend_names)
-  {
-    std::cout << "\t" << name << "\n";
-  }
-  std::cout << std::endl;
+  std::unique_ptr<resonance_core::AudioOutputStream> stream =
+    manager->get_stream("PulseAudio", "Built-in Audio Analog Stereo", spec);
 
-  for (const std::string& name: backend_names)
-  {
-    std::unordered_set<std::string> device_names =
-      manager->get_output_device_names(name);
-
-    std::cout << "Avaliable output devices for " << name << " include:\n";
-    for (const std::string& device: device_names)
-    {
-      std::cout << "\t" << device << "\n";
-    }
-    std::cout << std::endl;
-  }
+  std::cout << "Successfully created stream.\n";
 }
