@@ -19,7 +19,7 @@ public:
     ~AudioOutputDevice() = default;
 
   virtual std::unique_ptr<AudioOutputStream>
-    create_stream(AudioInterfaceSpec spec) const = 0;
+    create_stream(const AudioInterfaceSpec& spec) const = 0;
 };
 
 }

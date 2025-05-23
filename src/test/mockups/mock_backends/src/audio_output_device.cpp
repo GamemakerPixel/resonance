@@ -19,9 +19,11 @@ AudioOutputDevice::AudioOutputDevice(
 
 
 std::unique_ptr<resonance_core::AudioOutputStream>
-  AudioOutputDevice::create_stream(resonance_core::AudioInterfaceSpec spec) const
+  AudioOutputDevice::create_stream(
+    const resonance_core::AudioInterfaceSpec& /*spec*/
+  ) const
 {
-  return std::make_unique<AudioOutputStream>(spec, m_id);
+  return std::make_unique<AudioOutputStream>(m_id);
 }
 
 

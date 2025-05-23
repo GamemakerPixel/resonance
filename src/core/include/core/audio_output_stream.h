@@ -4,7 +4,6 @@
 #include <string>
 
 #include "core/abstract_depender.h"
-#include "core/audio_interface_spec.h"
 
 
 namespace resonance_core
@@ -12,11 +11,7 @@ namespace resonance_core
 
 class AudioOutputStream: public AbstractDepender
 {
-protected:
-  const AudioInterfaceSpec m_spec;
 public:
-  AudioOutputStream(AudioInterfaceSpec spec);
-
   virtual
     ~AudioOutputStream() = default;
 };
@@ -24,8 +19,17 @@ public:
 
 class OutputStreamConstructionException: public std::runtime_error
 {
+public:
   OutputStreamConstructionException(const std::string& message)
     : std::runtime_error(message) {}
+};
+
+
+class OutputStreamIncompatableSpecException: public OutputStreamConstructionException
+{
+public:
+  OutputStreamIncompatableSpecException(const std::string& message)
+    : OutputStreamConstructionException(message) {}
 };
 
 }

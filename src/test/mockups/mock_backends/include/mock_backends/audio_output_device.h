@@ -32,7 +32,7 @@ public:
   );
   
   std::unique_ptr<resonance_core::AudioOutputStream>
-    create_stream(resonance_core::AudioInterfaceSpec spec) const override;
+    create_stream(const resonance_core::AudioInterfaceSpec& spec) const override;
 
   std::pair<int, int>
     get_id() const;

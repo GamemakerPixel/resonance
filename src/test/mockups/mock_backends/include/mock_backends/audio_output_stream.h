@@ -2,7 +2,6 @@
 
 #include <utility>
 
-#include "core/audio_interface_spec.h"
 #include "core/audio_output_stream.h"
 
 
@@ -16,7 +15,6 @@ private:
 
 public:
   AudioOutputStream(
-    resonance_core::AudioInterfaceSpec spec,
     std::pair<int, int> device_id
   );
 

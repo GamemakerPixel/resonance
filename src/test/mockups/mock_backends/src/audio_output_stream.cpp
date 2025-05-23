@@ -9,10 +9,9 @@ using namespace mock_backends;
 
 
 AudioOutputStream::AudioOutputStream(
-  resonance_core::AudioInterfaceSpec spec,
   std::pair<int, int> device_id
 )
-  : resonance_core::AudioOutputStream(spec), m_device_id(device_id) {}
+  : m_device_id(device_id) {}
 
 
 std::pair<int, int>
