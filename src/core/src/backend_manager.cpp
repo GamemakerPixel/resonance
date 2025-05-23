@@ -5,6 +5,7 @@
 #include <unordered_set>
 
 #include "core/audio_backend.h"
+#include "core/audio_output_stream.h"
 #include "core/backend_factory.h"
 #include "core/backend_loader.h"
 
@@ -32,39 +33,12 @@ std::unordered_set<std::string>
 }
 
 
-/*std::shared_ptr<AudioBackend>
-  BackendManager::get_backend(const std::string& backend)
+std::unique_ptr<AudioOutputStream>
+  BackendManager::get_stream(
+    const std::string& backend,
+    const std::string& device,
+    const AudioInterfaceSpec& spec)
 {
-  
-}*/
+  return m_loader->create_output_stream(backend, device, spec);
+}
 
-
-/*
-class BackendManager
-{
-private:
-  const std::unique_ptr<const BackendFactory> m_factory;
-
-  //std::unordered_map<std::string, std::weak_ptr<AudioBackend>> m_backends;
-  //std::unordered_map<std::string, std::unordered_map<int, std::weak_ptr<AudioOutputDevice>>
-  //  m_devices;
-
-public:
-  BackendManager(std::unique_ptr<const BackendFactory> factory);
-
-  std::unordered_set<std::string>
-    get_backend_names() const;
-
-  std::unordered_set<std::string>
-    get_device_names(const std::string& backend);
-
-  std::unique_ptr<AudioOutputStream>
-    get_stream(const std::string& backend, const std::string& device);
-
-private:
-  std::shared_ptr<AudioBackend> get_backend(int backend_id);
-
-  //std::shared_ptr<AudioOutputDevice> get_device(int backend_id, int device_id);
-};
-
-*/

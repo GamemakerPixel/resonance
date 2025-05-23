@@ -90,7 +90,7 @@ std::shared_ptr<AudioOutputDevice>
 }
 
 
-std::shared_ptr<AudioOutputStream>
+std::unique_ptr<AudioOutputStream>
   BackendLoader::create_output_stream(
     const std::string& backend,
     const std::string& device,
@@ -105,5 +105,5 @@ std::shared_ptr<AudioOutputStream>
 
   m_output_devices.at(backend).at(device).subscribe_to_depender(*stream);
 
-  return std::shared_ptr<AudioOutputStream>(std::move(stream));
+  return stream;
 }

@@ -42,7 +42,7 @@ public:
 
   // data_type, layout, and sample_rate should be passed after negotiation, this should
   // fail if the device doesn't support these exact parameters.
-  std::shared_ptr<AudioOutputStream>
+  std::unique_ptr<AudioOutputStream>
     create_output_stream(
       const std::string& backend,
       const std::string& device,

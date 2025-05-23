@@ -189,9 +189,9 @@ TEST_F(BackendLoaderTest, ReturnsInstanceOfRequestedOutputStream)
     44100u
   );
 
-  test_help::MockOutputStreamSPtr stream = std::static_pointer_cast<
-    mock_backends::AudioOutputStream
-  >(m_loader->create_output_stream("Mock Backend 1", "Mock Device 1-1", spec));
+  test_help::MockOutputStreamUPtr stream = test_help::cast_to_mocked_stream(
+    m_loader->create_output_stream("Mock Backend 1", "Mock Device 1-1", spec)
+  );
 
   EXPECT_EQ(std::make_pair(1, 1), stream->get_device_id());
 }
@@ -208,7 +208,7 @@ TEST_F(BackendLoaderTest, StreamKeepsDeviceInstanceAlive)
   );
 
   int first_device_instance_id;
-  test_help::CoreOutputStreamSPtr stream;
+  test_help::CoreOutputStreamUPtr stream;
 
   {
     test_help::MockOutputDeviceSPtr first_device =

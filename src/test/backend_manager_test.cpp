@@ -1,4 +1,8 @@
 #include <gtest/gtest.h>
+#include "core/audio_backend.h"
+#include "core/audio_channel_layout.h"
+#include "core/audio_data_type.h"
+#include "core/audio_interface_spec.h"
 #include "core/backend_manager.h"
 
 #include <memory>
@@ -6,8 +10,6 @@
 #include <unordered_set>
 
 #include "core/backend_factory.h"
-
-#include "mock_backends/audio_backend.h"
 
 #include "test_helpers.h"
 
@@ -68,10 +70,65 @@ TEST_F(BackendManagerTest, ReturnsOutputDeviceNamesForExistingBackend)
 }
 
 
-TEST_F(BackendManagerTest, ThrowsInvalidBackendNameOnNonExistantBackendDeviceQuery)
+TEST_F(BackendManagerTest, ReturnsOutputStream)
+{
+  const std::string backend = "Mock Backend 0";
+  const std::string device = "Mock Device 0-0";
+  const AudioInterfaceSpec spec(
+    AudioDataType::FLOAT32,
+    standard_layouts::stereo,
+    44100u
+  );
+
+  const test_help::MockOutputStreamUPtr stream = test_help::cast_to_mocked_stream(
+    m_manager->get_stream(backend, device, spec)
+  );
+
+  EXPECT_EQ(std::make_pair(0, 0), stream->get_device_id());
+}
+
+
+// You could reasonably argue this test shouldn't exist because it depends on the mockup
+// implementation, but I would argue this makes sense as it documents that 
+// BackendManager will not handle these errors when they are thrown.
+TEST_F(BackendManagerTest, ForwardsInvalidBackendNameOnNonExistantBackendDeviceQuery)
 {
   EXPECT_THROW(
     m_manager->get_output_device_names("NonExistantBackend"),
     InvalidBackendNameException
+  );
+}
+
+
+TEST_F(BackendManagerTest, ForwardsInvalidBackendNameOnNonExistantBackendStreamCreation)
+{
+  const std::string backend = "NonExistantBackend";
+  const std::string device = "Mock Device 0-0";
+  const AudioInterfaceSpec spec(
+    AudioDataType::FLOAT32,
+    standard_layouts::stereo,
+    44100u
+  );
+
+  EXPECT_THROW(
+    m_manager->get_stream(backend, device, spec),
+    InvalidBackendNameException
+  );
+}
+
+
+TEST_F(BackendManagerTest, ForwardsDeviceNotAvaliableOnNonExistantDeviceStreamCreation)
+{
+  const std::string backend = "Mock Backend 0";
+  const std::string device = "NonExistantDevice";
+  const AudioInterfaceSpec spec(
+    AudioDataType::FLOAT32,
+    standard_layouts::stereo,
+    44100u
+  );
+
+  EXPECT_THROW(
+    m_manager->get_stream(backend, device, spec),
+    DeviceNotAvaliableException
   );
 }

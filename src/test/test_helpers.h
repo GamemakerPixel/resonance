@@ -4,6 +4,7 @@
 #include <memory>
 
 #include "mock_backends/audio_backend.h"
+#include "mock_backends/audio_output_stream.h"
 
 
 namespace resonance_core
@@ -66,7 +67,16 @@ static MockBackendUPtr
   cast_to_mocked_backend(CoreBackendUPtr backend)
 {
   return MockBackendUPtr(
-    static_cast<mock_backends::AudioBackend*>(backend.release())
+    dynamic_cast<mock_backends::AudioBackend*>(backend.release())
+  );
+}
+
+
+static MockOutputStreamUPtr
+  cast_to_mocked_stream(CoreOutputStreamUPtr stream)
+{
+  return MockOutputStreamUPtr(
+    dynamic_cast<mock_backends::AudioOutputStream*>(stream.release())
   );
 }
 

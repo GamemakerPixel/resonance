@@ -9,9 +9,9 @@ namespace resonance_core
 
 struct AudioInterfaceSpec
 {
-  AudioDataType m_data_type;
-  AudioChannelLayout m_layout;
-  unsigned int m_sample_rate;
+  const AudioDataType m_data_type;
+  const AudioChannelLayout m_layout;
+  const unsigned int m_sample_rate;
 
   AudioInterfaceSpec(
     AudioDataType data_type,

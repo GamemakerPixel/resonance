@@ -4,6 +4,7 @@
 #include <string>
 #include <unordered_set>
 
+#include "core/audio_interface_spec.h"
 #include "core/backend_loader.h"
 
 
@@ -29,8 +30,12 @@ public:
   std::unordered_set<std::string>
     get_output_device_names(const std::string& backend_name);
 
-  //std::unique_ptr<AudioOutputStream>
-  //  get_stream(const std::string& backend, const std::string& device);
+  std::unique_ptr<AudioOutputStream>
+    get_stream(
+      const std::string& backend,
+      const std::string& device,
+      const AudioInterfaceSpec& spec
+    );
 };
 
 }
