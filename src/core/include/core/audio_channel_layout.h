@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+#include <unordered_map>
 #include <vector>
 
 
@@ -34,6 +36,8 @@ enum class AudioChannelId
 
 struct AudioChannelLayout
 {
+	static const std::unordered_map<AudioChannelId, std::string> id_names;
+
   std::vector<AudioChannelId> m_channel_ids;
 
   AudioChannelLayout(std::vector<AudioChannelId> channel_ids);
@@ -43,6 +47,9 @@ struct AudioChannelLayout
   
   bool
     operator!=(const AudioChannelLayout& other) const;
+
+	std::string
+		to_string() const;
 };
 
 namespace standard_layouts
