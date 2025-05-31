@@ -8,6 +8,7 @@ if (BUILD_TESTING)
   target_sources(${PROJECT_NAME}_tests PRIVATE
     abstract_depender_test.cpp
     abstract_subscription_ptr_test.cpp
+		audio_data_type_test.cpp
     backend_factory_test.cpp
     backend_loader_test.cpp
     backend_manager_test.cpp
