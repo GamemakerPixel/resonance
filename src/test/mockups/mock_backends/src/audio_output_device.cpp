@@ -26,6 +26,14 @@ std::unique_ptr<resonance_core::AudioOutputStream>
   return std::make_unique<AudioOutputStream>(m_id);
 }
 
+bool
+	AudioOutputDevice::is_spec_compatable(
+		const resonance_core::AudioInterfaceSpec& spec
+	) const
+{
+	return false;
+}
+
 
 std::pair<int, int>
   AudioOutputDevice::get_id() const
