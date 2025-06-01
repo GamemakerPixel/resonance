@@ -20,6 +20,16 @@ public:
 
   std::unique_ptr<resonance_core::AudioOutputStream>
     create_stream(const resonance_core::AudioInterfaceSpec& spec) const override;
+  
+  bool
+    is_spec_compatable(const resonance_core::AudioInterfaceSpec& spec) const override;
+
+private:
+  void
+    validate_spec(const resonance_core::AudioInterfaceSpec& spec) const;
+    
+  SoundIoFormat
+    negotiate_compatable_format(resonance_core::AudioDataType type) const;
 };
 
 }

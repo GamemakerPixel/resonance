@@ -30,6 +30,13 @@ public:
   std::unordered_set<std::string>
     get_output_device_names(const std::string& backend_name);
 
+	bool
+		is_spec_compatable_with_output_device(
+			const std::string& backend,
+			const std::string& device,
+			const AudioInterfaceSpec& spec
+		);
+
   std::unique_ptr<AudioOutputStream>
     get_stream(
       const std::string& backend,

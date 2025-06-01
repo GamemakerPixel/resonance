@@ -5,6 +5,7 @@
 #include <unordered_set>
 
 #include "core/audio_backend.h"
+#include "core/audio_output_device.h"
 #include "core/audio_output_stream.h"
 #include "core/backend_factory.h"
 #include "core/backend_loader.h"
@@ -30,6 +31,18 @@ std::unordered_set<std::string>
   std::shared_ptr<AudioBackend> backend = m_loader->load_backend(backend_name);
 
   return backend->get_output_device_names();
+}
+
+bool
+	BackendManager::is_spec_compatable_with_output_device(
+		const std::string& backend,
+		const std::string& device,
+		const AudioInterfaceSpec& spec)
+{
+	std::shared_ptr<AudioOutputDevice> loaded_device =
+		m_loader->load_output_device(backend, device);
+
+	return loaded_device->is_spec_compatable(spec);
 }
 
 

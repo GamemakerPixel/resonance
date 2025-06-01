@@ -34,6 +34,22 @@ int
     44100u
   );
 
+	std::cout << "Checking spec compatability...\n";
+
+	if (
+		manager->is_spec_compatable_with_output_device(
+			"PulseAudio",
+			"Built-in Audio Analog Stereo",
+			spec
+		))
+	{
+		std::cout << "Spec is compatable.\n";
+	}
+	else
+	{
+		std::cout << "Spec is incompatable.\n";	
+	}
+
   std::unique_ptr<resonance_core::AudioOutputStream> stream =
     manager->get_stream("PulseAudio", "Built-in Audio Analog Stereo", spec);
 
