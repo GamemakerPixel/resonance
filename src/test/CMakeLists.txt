@@ -14,6 +14,7 @@ if (BUILD_TESTING)
     backend_factory_test.cpp
     backend_loader_test.cpp
     backend_manager_test.cpp
+		writable_channel_test.cpp
   )
 
   include(GoogleTest)
