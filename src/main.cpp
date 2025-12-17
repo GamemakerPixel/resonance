@@ -2,12 +2,7 @@
 #include <string>
 #include <unordered_set>
 
-#include "core/audio_channel_layout.h"
-#include "core/audio_data_type.h"
-#include "core/audio_interface_spec.h"
-#include "core/audio_output_stream.h"
-#include "core/backend_factory.h"
-#include "core/backend_manager.h"
+#include "core/core.h"
 #include "soundio_backends/soundio_backends.h"
 
 

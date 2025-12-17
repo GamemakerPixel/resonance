@@ -6,7 +6,7 @@
 
 #include <soundio/soundio.h>
 
-#include "core/audio_backend.h"
+#include "core/core.h"
 
 
 namespace resonance_core

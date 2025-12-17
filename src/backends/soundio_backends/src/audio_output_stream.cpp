@@ -1,6 +1,5 @@
 #include "soundio_backends/audio_output_stream.h"
-#include "core/audio_output_device.h"
-#include "core/audio_output_stream.h"
+#include "core/core.h"
 
 #include <soundio/soundio.h>
 

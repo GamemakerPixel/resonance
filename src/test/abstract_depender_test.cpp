@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "core/abstract_depender.h"
+#include "core/core.h"
 
 using namespace resonance_core;
 

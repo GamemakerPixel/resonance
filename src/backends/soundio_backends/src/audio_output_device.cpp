@@ -7,7 +7,7 @@
 #include <string>
 #include <unordered_set>
 
-#include "core/audio_output_device.h"
+#include "core/core.h"
 
 #include "soundio_backends/audio_interface_spec_soundio.h"
 #include "soundio_backends/audio_output_stream.h"

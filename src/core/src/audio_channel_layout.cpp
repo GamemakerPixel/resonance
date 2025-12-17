@@ -1,4 +1,4 @@
-#include "core/audio_channel_layout.h"
+#include "audio_channel_layout.h"
 
 
 using namespace resonance_core;

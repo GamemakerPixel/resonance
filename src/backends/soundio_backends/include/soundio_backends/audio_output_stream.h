@@ -4,9 +4,7 @@
 
 #include <soundio/soundio.h>
 
-#include "core/audio_channel_layout.h"
-#include "core/audio_data_type.h"
-#include "core/audio_output_stream.h"
+#include "core/core.h"
 
 #include "soundio_backends/audio_interface_spec_soundio.h"
 

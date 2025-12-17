@@ -1,10 +1,10 @@
-#include "core/abstract_subscription_ptr.h"
+#include "abstract_subscription_ptr.h"
 
 #include <memory>
 
-#include "core/abstract_depender.h"
-#include "core/audio_backend.h"
-#include "core/audio_output_device.h"
+#include "abstract_depender.h"
+#include "audio_backend.h"
+#include "audio_output_device.h"
 
 using namespace resonance_core;
 

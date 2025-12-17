@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "core/audio_channel_layout.h"
+#include "core/core.h"
 
 using namespace resonance_core;
 

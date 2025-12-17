@@ -4,8 +4,8 @@
 #include <string>
 #include <unordered_set>
 
-#include "core/audio_interface_spec.h"
-#include "core/backend_loader.h"
+#include "audio_interface_spec.h"
+#include "backend_loader.h"
 
 
 namespace resonance_core

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/audio_output_device.h"
+#include "core/core.h"
 
 #include <memory>
 

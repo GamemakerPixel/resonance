@@ -4,9 +4,9 @@
 #include <string>
 #include <unordered_map>
 
-#include "core/abstract_subscription_ptr.h"
-#include "core/audio_data_type.h"
-#include "core/audio_interface_spec.h"
+#include "abstract_subscription_ptr.h"
+#include "audio_data_type.h"
+#include "audio_interface_spec.h"
 
 
 namespace resonance_core

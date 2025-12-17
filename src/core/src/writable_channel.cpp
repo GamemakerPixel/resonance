@@ -1,4 +1,4 @@
-#include "core/writable_channel.h"
+#include "writable_channel.h"
 
 #include <cstdint>
 #include <string>

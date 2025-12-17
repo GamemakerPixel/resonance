@@ -1,17 +1,9 @@
 #include <gtest/gtest.h>
-#include "core/audio_channel_layout.h"
-#include "core/audio_data_type.h"
-#include "core/audio_interface_spec.h"
-#include "core/backend_loader.h"
+#include "core/core.h"
 
 #include <memory>
 #include <string>
 #include <utility>
-
-#include "core/audio_channel_layout.h"
-#include "core/audio_data_type.h"
-#include "core/audio_interface_spec.h"
-#include "core/backend_factory.h"
 
 #include "mock_backends/audio_backend.h"
 #include "mock_backends/audio_output_device.h"

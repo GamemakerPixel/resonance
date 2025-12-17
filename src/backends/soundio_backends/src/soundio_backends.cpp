@@ -6,7 +6,7 @@
 
 #include <soundio/soundio.h>
 
-#include "core/backend_factory.h"
+#include "core/core.h"
 
 #include "soundio_backends/audio_backend.h"
 

@@ -1,15 +1,9 @@
 #include <gtest/gtest.h>
-#include "core/audio_backend.h"
-#include "core/audio_channel_layout.h"
-#include "core/audio_data_type.h"
-#include "core/audio_interface_spec.h"
-#include "core/backend_manager.h"
+#include "core/core.h"
 
 #include <memory>
 #include <string>
 #include <unordered_set>
-
-#include "core/backend_factory.h"
 
 #include "test_helpers.h"
 

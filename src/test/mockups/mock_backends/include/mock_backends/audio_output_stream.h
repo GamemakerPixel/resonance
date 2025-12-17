@@ -2,7 +2,7 @@
 
 #include <utility>
 
-#include "core/audio_output_stream.h"
+#include "core/core.h"
 
 
 namespace mock_backends

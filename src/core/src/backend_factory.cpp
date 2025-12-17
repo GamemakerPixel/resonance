@@ -1,4 +1,4 @@
-#include "core/backend_factory.h"
+#include "backend_factory.h"
 
 #include <memory>
 #include <stdexcept>
@@ -6,7 +6,7 @@
 #include <unordered_map>
 #include <unordered_set>
 
-#include "core/audio_backend.h"
+#include "audio_backend.h"
 
 using namespace resonance_core;
 

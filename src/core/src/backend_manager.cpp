@@ -1,14 +1,14 @@
-#include "core/backend_manager.h"
+#include "backend_manager.h"
 
 #include <memory>
 #include <string>
 #include <unordered_set>
 
-#include "core/audio_backend.h"
-#include "core/audio_output_device.h"
-#include "core/audio_output_stream.h"
-#include "core/backend_factory.h"
-#include "core/backend_loader.h"
+#include "audio_backend.h"
+#include "audio_output_device.h"
+#include "audio_output_stream.h"
+#include "backend_factory.h"
+#include "backend_loader.h"
 
 using namespace resonance_core;
 

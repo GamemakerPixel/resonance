@@ -1,4 +1,4 @@
-#include "core/audio_data_type.h"
+#include "audio_data_type.h"
 
 #include <string>
 #include <unordered_map>

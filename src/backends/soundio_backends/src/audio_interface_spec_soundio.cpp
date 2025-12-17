@@ -1,6 +1,6 @@
 #include "soundio_backends/audio_interface_spec_soundio.h"
-#include "core/audio_channel_layout.h"
-#include "core/audio_data_type.h"
+#include "core/core.h"
+
 #include <limits>
 #include <soundio/soundio.h>
 #include <string>

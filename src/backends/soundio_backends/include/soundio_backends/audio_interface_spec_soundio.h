@@ -7,9 +7,7 @@
 #include <unordered_map>
 #include <unordered_set>
 
-#include "core/audio_channel_layout.h"
-#include "core/audio_data_type.h"
-#include "core/audio_interface_spec.h"
+#include "core/core.h"
 
 
 namespace soundio_backends

@@ -4,8 +4,8 @@
 #include <stdexcept>
 #include <string>
 
-#include "core/abstract_depender.h"
-#include "core/audio_interface_spec.h"
+#include "abstract_depender.h"
+#include "audio_interface_spec.h"
 
 
 namespace resonance_core

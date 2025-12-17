@@ -3,7 +3,7 @@
 #include <string>
 #include <unordered_set>
 
-#include "core/audio_output_device.h"
+#include "core/core.h"
 
 #include "mock_backends/audio_output_device.h"
 

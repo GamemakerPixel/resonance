@@ -13,11 +13,11 @@ namespace resonance_core
 
 class AudioBackend;
 
+using AudioBackendConstructor = std::function<std::unique_ptr<AudioBackend>()>;
+
 class BackendFactory
 {
 private:
-  using AudioBackendConstructor = std::function<std::unique_ptr<AudioBackend>()>;
-
   std::unordered_map<std::string, AudioBackendConstructor> m_backend_constructors;
 
 public:

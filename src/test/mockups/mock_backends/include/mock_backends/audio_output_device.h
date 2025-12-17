@@ -3,8 +3,7 @@
 #include <memory>
 #include <utility>
 
-#include "core/audio_interface_spec.h"
-#include "core/audio_output_device.h"
+#include "core/core.h"
 
 
 namespace resonance_core

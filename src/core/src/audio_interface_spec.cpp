@@ -1,4 +1,4 @@
-#include "core/audio_interface_spec.h"
+#include "audio_interface_spec.h"
 
 using namespace resonance_core;
 

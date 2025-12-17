@@ -1,7 +1,7 @@
 #pragma once
 
-#include "core/audio_channel_layout.h"
-#include "core/audio_data_type.h"
+#include "audio_channel_layout.h"
+#include "audio_data_type.h"
 
 
 namespace resonance_core

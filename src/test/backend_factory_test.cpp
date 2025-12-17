@@ -1,12 +1,10 @@
 #include <gtest/gtest.h>
-#include "core/backend_factory.h"
+#include "core/core.h"
 
 #include <memory>
 #include <stdexcept>
 #include <string>
 #include <unordered_set>
-
-#include "core/audio_backend.h"
 
 #include "mock_backends/audio_backend.h"
 

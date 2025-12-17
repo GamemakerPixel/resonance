@@ -1,9 +1,7 @@
 #include <gtest/gtest.h>
-#include "core/abstract_subscription_ptr.h"
+#include "core/core.h"
 
 #include <memory>
-
-#include "core/abstract_depender.h"
 
 #include "mock_backends/audio_backend.h"
 

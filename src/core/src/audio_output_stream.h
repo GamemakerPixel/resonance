@@ -4,7 +4,7 @@
 #include <stdexcept>
 #include <string>
 
-#include "core/abstract_depender.h"
+#include "abstract_depender.h"
 
 
 namespace resonance_core
