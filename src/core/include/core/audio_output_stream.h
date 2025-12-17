@@ -1,5 +1,6 @@
 #pragma once
 
+#include <functional>
 #include <stdexcept>
 #include <string>
 
@@ -14,6 +15,9 @@ class AudioOutputStream: public AbstractDepender
 public:
   virtual
     ~AudioOutputStream() = default;
+
+	//virtual void
+	//	start(std::function<void(int)> write_callback) = 0;
 };
 
 
