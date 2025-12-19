@@ -6,14 +6,6 @@
 #include "core/core.h"
 
 
-namespace resonance_core
-{
-
-class AudioOutputStream;
-
-}
-
-
 namespace mock_backends
 {
 

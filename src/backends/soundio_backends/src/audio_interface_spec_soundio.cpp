@@ -1,4 +1,4 @@
-#include "soundio_backends/audio_interface_spec_soundio.h"
+#include "audio_interface_spec_soundio.h"
 #include "core/core.h"
 
 #include <limits>

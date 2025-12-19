@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include <unordered_set>
 
 #include "core/core.h"
 #include "soundio_backends/soundio_backends.h"

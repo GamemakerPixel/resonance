@@ -6,7 +6,7 @@
 #include <string>
 #include <unordered_set>
 
-#include "mock_backends/audio_backend.h"
+#include "mock_backends/mock_backends.h"
 
 #include "test_helpers.h"
 

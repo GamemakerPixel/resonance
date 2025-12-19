@@ -3,7 +3,7 @@
 
 #include <memory>
 
-#include "mock_backends/audio_backend.h"
+#include "mock_backends/mock_backends.h"
 
 
 using namespace resonance_core;

@@ -1,4 +1,4 @@
-#include "soundio_backends/audio_output_stream.h"
+#include "audio_output_stream.h"
 #include "core/core.h"
 
 #include <soundio/soundio.h>

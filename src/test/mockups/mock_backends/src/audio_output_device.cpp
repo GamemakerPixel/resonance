@@ -1,5 +1,5 @@
-#include "mock_backends/audio_output_device.h"
-#include "mock_backends/audio_output_stream.h"
+#include "audio_output_device.h"
+#include "audio_output_stream.h"
 
 #include <memory>
 #include <utility>

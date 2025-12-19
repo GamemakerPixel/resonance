@@ -6,7 +6,7 @@
 
 #include "core/core.h"
 
-#include "soundio_backends/audio_interface_spec_soundio.h"
+#include "audio_interface_spec_soundio.h"
 
 
 namespace soundio_backends

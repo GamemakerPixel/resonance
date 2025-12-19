@@ -3,8 +3,7 @@
 #include <functional>
 #include <memory>
 
-#include "mock_backends/audio_backend.h"
-#include "mock_backends/audio_output_stream.h"
+#include "mock_backends/mock_backends.h"
 
 
 namespace resonance_core

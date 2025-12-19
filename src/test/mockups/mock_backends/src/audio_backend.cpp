@@ -1,11 +1,11 @@
-#include "mock_backends/audio_backend.h"
+#include "audio_backend.h"
 
 #include <string>
 #include <unordered_set>
 
 #include "core/core.h"
 
-#include "mock_backends/audio_output_device.h"
+#include "audio_output_device.h"
 
 using namespace mock_backends;
 

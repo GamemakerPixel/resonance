@@ -1,8 +1,6 @@
-#include "mock_backends/audio_output_stream.h"
+#include "audio_output_stream.h"
 
 #include <utility>
-
-#include "core/core.h"
 
 using namespace mock_backends;
 

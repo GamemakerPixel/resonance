@@ -1,4 +1,4 @@
-#include "soundio_backends/audio_output_device.h"
+#include "audio_output_device.h"
 
 #include <limits>
 #include <memory>
@@ -9,8 +9,8 @@
 
 #include "core/core.h"
 
-#include "soundio_backends/audio_interface_spec_soundio.h"
-#include "soundio_backends/audio_output_stream.h"
+#include "audio_interface_spec_soundio.h"
+#include "audio_output_stream.h"
 
 using namespace soundio_backends;
 
