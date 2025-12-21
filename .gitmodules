@@ -1,6 +1,0 @@
-[submodule "external/googletest"]
-	path = external/googletest
-	url = https://github.com/google/googletest.git
-[submodule "external/libsoundio"]
-	path = external/libsoundio
-	url = https://github.com/andrewrk/libsoundio.git

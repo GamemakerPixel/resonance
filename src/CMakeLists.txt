@@ -4,6 +4,8 @@ project(resonance LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
+include(FetchContent)
+
 add_subdirectory(core)
 add_subdirectory(backends)
 add_subdirectory(views)

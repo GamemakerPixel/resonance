@@ -10,5 +10,4 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
 include(CTest)
 
-add_subdirectory(external)
 add_subdirectory(src)
